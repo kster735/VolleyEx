@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = this.getClass().getSimpleName();
-    public final String SERVER ="https://4epal-peiraia.att.sch.gr/testPhp/";
+    public final String SERVER ="***********************";
     private RequestQueue queue;
 
     public ArrayList<Customer> pelates;
