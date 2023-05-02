@@ -13,9 +13,9 @@ import java.util.Map;
 public class MyStringRequest extends com.android.volley.toolbox.StringRequest{
     private final String TAG = this.getClass().getSimpleName();
     private final Map<String, String> _params;
-    private static final String SET_COOKIE_KEY = "Set-Cookie";
-    private static final String COOKIE_KEY = "Cookie";
-    private static final String SESSION_COOKIE = "PHPSESSID";
+    private static final String SET_COOKIE_KEY = "**********************";
+    private static final String COOKIE_KEY = "******************";
+    private static final String SESSION_COOKIE = "************************";
     private Activity activity;
 
     /**
