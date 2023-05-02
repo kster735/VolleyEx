@@ -1,6 +1,8 @@
 package gr.uniwa.volleyex;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
     public ArrayList<Customer> pelates;
 
+    private RecyclerView recyclerCustomers;
+
+    // LinearLayout ?
+
+    private MyAdapter myAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +48,15 @@ public class MainActivity extends AppCompatActivity {
 
         pelates = new ArrayList<>();
 
+        // Εδώ απλώς εξασφαλίζεται το session ή αλλιώς η σύνδεση με την απομακρυνσμένη βάση
+        // δεδομένων.
         queue = AppSingleton.getInstance(MainActivity.this).getRequestQueue();
         createSession();
 
-
+        recyclerCustomers = (RecyclerView) findViewById(R.id.myRecycler);
+        myAdapter = new MyAdapter(pelates, this);
+        // Ο πίνακας pelates τελικά δε γεμίζει εδώ, αλλά στην parseJSONMessage(response) που καλείται
+        // από τον responseListener
     }
 
     private void createSession() {
@@ -121,7 +134,14 @@ public class MainActivity extends AppCompatActivity {
                         pelates.add(pelatis);
                         Log.d(TAG, "parseJSONMessage: " + pelatis.toString());
                     }
+
+                    // Τώρα έχει γεμίσει ο πίνακας pelates οπότε εδώ περνάμε τον adapter του πίνακα
+                    // μέσα στον recyclerView
+                    recyclerCustomers.setAdapter(myAdapter);
+                    // Τελικά χρειάζεται και layoutManager για να φανούν τα δεδομένα στον RecyclerView
+                    recyclerCustomers.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                     break;
+
             }
         } catch (Throwable t) {
             Log.d(TAG, "Could not parse malformed JSON: \"" + response + "\""+ t.getMessage());

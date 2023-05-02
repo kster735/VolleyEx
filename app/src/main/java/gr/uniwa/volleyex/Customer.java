@@ -1,11 +1,14 @@
 package gr.uniwa.volleyex;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Customer {
+    private static final String TAG = "Customer: ";
     private int custId;
     private String firstName;
     private String lastName;
@@ -16,13 +19,14 @@ public class Customer {
     private Calendar updDate;
     private boolean activ;
     private Calendar deactDate;
-    private String password;
+    //private String password;
 
     public Customer() {
 
     }
 
-    public Customer(String firstName, String lastName, String tel, String mail, String nickName, String regDate, String updDate, String activ, String deactDate, String password) {
+    public Customer(String custId, String firstName, String lastName, String tel, String mail, String nickName, String regDate, String updDate, String activ, String deactDate) {
+        this.custId = Integer.parseInt(custId);
         this.firstName = firstName;
         this.lastName = lastName;
         this.tel = tel;
@@ -32,10 +36,10 @@ public class Customer {
         this.updDate = stringToCalendar(updDate);
         this.activ = (activ.equals("0")) ? false : true;
         this.deactDate = stringToCalendar(deactDate);
-        this.password = password;
+        //this.password = password;
     }
 
-    
+
     private Calendar stringToCalendar(String strdate) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cldr= null;
@@ -46,6 +50,7 @@ public class Customer {
             cldr.setTime(date);
         } catch (ParseException ex) {
             cldr = null;
+            Log.e(TAG, "stringToCalendar: " + ex.getMessage());
         }
         return cldr;
     }
@@ -54,8 +59,8 @@ public class Customer {
         return custId;
     }
 
-    public void setCustId(int custId) {
-        this.custId = custId;
+    public void setCustId(String custId) {
+        this.custId = Integer.parseInt(custId);
     }
 
     public String getFirstName() {
@@ -118,8 +123,9 @@ public class Customer {
         return activ;
     }
 
-    public void setActiv(boolean activ) {
-        this.activ = activ;
+    public void setActiv(String activ) {
+        this.activ = (activ.equals("0")) ? false : true;
+
     }
 
     public Calendar getDeactDate() {
@@ -130,13 +136,6 @@ public class Customer {
         this.deactDate = stringToCalendar(deactDate);
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public String toString() {
@@ -146,4 +145,21 @@ public class Customer {
                 ", regDate='" + regDate.get(Calendar.DAY_OF_MONTH) + "-" + regDate.get(Calendar.MONTH) +"-"+ regDate.get(Calendar.YEAR) + '\'' +
                 '}';
     }
+
+
+//    @Override
+//    public String toString() {
+//        return "Customer{" +
+//                "custId=" + custId +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", tel='" + tel + '\'' +
+//                ", mail='" + mail + '\'' +
+//                ", nickName='" + nickName + '\'' +
+//                ", regDate=" + regDate +
+//                ", updDate=" + updDate +
+//                ", activ=" + activ +
+////                ", deactDate=" + deactDate +
+//                '}';
+//    }
 }
